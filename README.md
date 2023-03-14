@@ -7,4 +7,23 @@ La utilización de Docker ha permitido la creación de un Dockerfile que facilit
 
 La arquitectura de la aplicación está diseñada para ser eficiente y escalable, y la combinación de las tecnologías mencionadas garantiza un alto rendimiento y una gran flexibilidad.
 
+# instrucciones para correr la api
+
+en consola utilizar los siguientes comando de manera ordenada 
+
+
+docker network create mi-red
+
+en la carpeta de la base de datos:
+
+docker build -t mongo .
+
+docker run --name mi-mongo --network mi-red -p 12500:27017 -d mongo
+
+en la carpeta de la api:
+
+docker build -t mi-aplicacion .
+
+docker run --name mi-aplicacion --network mi-red -p 8000:8000 mi-aplicacion
+
 ¡Gracias por utilizar esta aplicación! Si tienes alguna duda o sugerencia, no dudes en ponerte en contacto con nosotros.
