@@ -15,5 +15,5 @@ class Form_r(BaseModel):
     fechacreacion: str
     idform: Optional[str]
     tipologia: str =  "indique la tipologia del formulario"
-    respuestas: List[Respuesta]
+    respuestas: List[Respuesta] =[]
     preguntasrespuestas: List[Preguntasrespuestas]

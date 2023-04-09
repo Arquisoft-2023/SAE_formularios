@@ -13,12 +13,12 @@ from starlette.status import HTTP_204_NO_CONTENT
 form = APIRouter()
 
 
-@form.get('/forms', response_model=list[Form])
+@form.get('/formularios/', response_model=list[Form])
 def buscar_formularios():
     return entidad_formularios(conn.local.formularios.find())
 
 
-@form.post('/forms', response_model= Form)
+@form.post('/formularios/crear/', response_model= Form)
 def crear_formulario(formulario: Form):
     formulario_dict = formulario.dict()
     nuevo_formulario = dict(formulario_dict)
@@ -32,14 +32,14 @@ def reportar_tamisajes(id:str):
     formulario= Form.parse_obj(conn.local.formularios.find_one({"_id": ObjectId(id)}))
     return formulario.respuestas
 
-@form.get('/tamizajes/estudiante/{id}')
+@form.get('/tamizajes/estudiante/{id}/{usuario_un}')
 def reportar_tamisajes_estudiante(id:str, usuario_un:str):
     formulario= Form_r.parse_obj(conn.local.formularios.find_one({"_id": ObjectId(id)}))
     tamizaje = next((o for o in formulario.respuestas if o.rusuarioun == usuario_un), None)
     return tamizaje
     
 
-@form.put('/tamisajes/bienestar{id}')
+@form.put('/tamizajes/bienestar/{id}')
 def realizar_tamizaje(id:str, formulario: Form_r):
     formulario_dict = formulario.dict()
     nuevo_formulario = dict(formulario_dict)
@@ -50,12 +50,12 @@ def realizar_tamizaje(id:str, formulario: Form_r):
 
 
 
-@form.get('/forms/{id}', response_model= Form)
+@form.get('/formularios/id/{id}', response_model= Form)
 def buscar_formulario(id: str):
      return conn.local.formularios.find_one({"_id": ObjectId(id)})
 
 
-@form.put('/forms/{id}')
+@form.put('/forms/actua/{id}')
 def actualizar_formulario(id: str, formulario: Form):
     formulario_dict = formulario.dict()
     nuevo_formulario = dict(formulario_dict)
@@ -65,7 +65,7 @@ def actualizar_formulario(id: str, formulario: Form):
     
 
 
-@form.delete('/forms/{id}', status_code=status.HTTP_204_NO_CONTENT)
+@form.delete('/forms/borrar/{id}', status_code=status.HTTP_204_NO_CONTENT)
 def borrar_formulario(id: str):
     entidad_formulario(
         conn.local.formularios.find_one_and_delete({"_id": ObjectId(id)}))
