@@ -12,4 +12,4 @@ ENV MONGODB_USERNAME=admin
 ENV MONGODB_PASSWORD=secret
 ENV MONGODB_DB=mydatabase
 
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "app:app", "--host", "127.0.0.5", "--port", "3025"]
