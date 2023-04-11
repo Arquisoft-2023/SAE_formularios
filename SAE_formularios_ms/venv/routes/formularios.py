@@ -55,7 +55,7 @@ def buscar_formulario(id: str):
      return conn.local.formularios.find_one({"_id": ObjectId(id)})
 
 
-@form.put('/forms/actua/{id}')
+@form.put('/formularios/actua/{id}')
 def actualizar_formulario(id: str, formulario: Form):
     formulario_dict = formulario.dict()
     nuevo_formulario = dict(formulario_dict)
@@ -65,7 +65,7 @@ def actualizar_formulario(id: str, formulario: Form):
     
 
 
-@form.delete('/forms/borrar/{id}', status_code=status.HTTP_204_NO_CONTENT)
+@form.delete('/formularios/borrar/{id}', status_code=status.HTTP_204_NO_CONTENT)
 def borrar_formulario(id: str):
     entidad_formulario(
         conn.local.formularios.find_one_and_delete({"_id": ObjectId(id)}))
