@@ -1,0 +1,48 @@
+version: "3"
+
+services:
+  mongodb:
+    image: mongo
+    container_name: sae_formularios_db
+    restart: always
+    environment:
+      DATABASE_USER: "mongo_formularios"
+      DATABASE_PASSWORD: "password"
+      DATABASE_HOST: "sae_formularios_db"
+      DATABASE_PORT: "27018"
+      DATABASE_NAME: "SAE_formularios_db"
+    ports: 
+      - "27018:27017"
+    volumes:
+      - volumen_data:/data/db
+    networks:
+      nodes-networks:
+        aliases:
+          - sae_formularios_db
+
+  formularios:
+    build: .
+    container_name: sae_formularios_ms
+    restart: always
+    environment:
+      DATABASE_USER: "mongo_formularios"
+      DATABASE_PASSWORD: "password"
+      DATABASE_HOST: "sae_formularios_db"
+      DATABASE_PORT: "27018"
+      DATABASE_NAME: "SAE_formularios_db"
+    ports:
+      - "127.0.0.5:3025:80"
+    depends_on:
+      - mongodb
+    networks:
+      nodes-networks:
+        aliases:
+          - sae_formularios_ms
+
+volumes:
+  volumen_data:
+
+networks:
+  nodes-networks:
+    external: true
+    
