@@ -1,15 +1,14 @@
-FROM python:3.9-slim-buster
-
-COPY requirements.txt /app/
-RUN pip install --no-cache-dir -r /app/requirements.txt
+# Use an official Python runtime as a parent image
+FROM python:3
 
 COPY . /app/
 WORKDIR /app
 
-ENV MONGODB_HOST=db
-ENV MONGODB_PORT=27017
-ENV MONGODB_USERNAME=admin
-ENV MONGODB_PASSWORD=secret
-ENV MONGODB_DB=mydatabase
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-CMD ["uvicorn", "app:app", "--host", "127.0.0.5", "--port", "3025"]
+COPY . .
+
+EXPOSE 80
+
+CMD ["uvicorn", "App:app", "--host", "0.0.0.0", "--port", "80"]
