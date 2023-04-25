@@ -22,6 +22,7 @@ services:
 
   formularios:
     build: .
+    image: sae_formularios_ms
     container_name: sae_formularios_ms
     restart: always
     environment:
